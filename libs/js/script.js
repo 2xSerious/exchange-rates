@@ -4,10 +4,11 @@ var rates = [];
 var promises = [];
 var lognestArray = [];
 var lognestlength = 0;
+var date = new Date().toISOString().split("T")[0];
 $(function () {
   countryList();
   $("#currency-list").change(currencyRate);
-  getRates();
+  handler();
 });
 
 function countryList() {
@@ -19,8 +20,22 @@ function countryList() {
   $("#currency-list option[value='usd']").prop("selected", true);
 }
 
+function handler() {
+  const cached = localStorage.getItem("data");
+  const data = JSON.parse(cached);
+  if (!data) {
+    getRates();
+    return;
+  }
+  if (date === data[0].data.date) {
+    rates = data;
+    currencyRate();
+  }
+}
+
 // GET RATES FOR EVERY POSSIBLE PAIR
 function getRates() {
+  localStorage.removeItem("data");
   currencies.forEach((c) => {
     for (let i = 0; i < currencies.length; i++) {
       if (c !== currencies[i]) {
@@ -38,6 +53,7 @@ function getRates() {
   console.log(rates);
   $.when.apply(null, promises).done(function () {
     currencyRate();
+    localStorage.setItem("data", JSON.stringify(rates));
   });
 }
 
