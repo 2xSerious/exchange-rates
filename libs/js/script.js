@@ -50,7 +50,6 @@ function getRates() {
       }
     }
   });
-  console.log(rates);
   $.when.apply(null, promises).done(function () {
     currencyRate();
     localStorage.setItem("data", JSON.stringify(rates));
@@ -69,7 +68,6 @@ function currencyRate() {
     var forCurrency = rates.filter(
       (currency) => currency.c === current || currency.data[`${current}`]
     );
-    console.log(forCurrency);
     $("#title").text(`${current.toUpperCase()}`);
     forCurrency.forEach((e) => {
       let pair = Object.keys(e.data)[1];
