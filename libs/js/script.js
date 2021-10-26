@@ -130,11 +130,22 @@ function currencyRate() {
     );
 
     let arr1 = lognestArray.filter((el) => {
-      return el.rate <= max - 0.5;
+      return el.rate >= max - 0.5;
     });
     let arr2 = lognestArray.filter((el) => {
-      return el.rate >= min + 0.5;
+      return el.rate <= min + 0.5;
     });
+
+    // let arr1 = [];
+    // let arr2 = [];
+    // lognestArray.forEach((el) => {
+    //   if (el.rate <= min + 0.5) {
+    //     arr1.push(el);
+    //   }
+    //   if (el.rate >= max - 0.5) {
+    //     arr2.push(el);
+    //   }
+    // });
 
     if (arr1.length > arr2.length) {
       lognestlength = arr1.length;
