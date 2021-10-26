@@ -31,6 +31,7 @@ function handler() {
     rates = data;
     currencyRate();
   }
+  getRates();
 }
 
 // GET RATES FOR EVERY POSSIBLE PAIR
