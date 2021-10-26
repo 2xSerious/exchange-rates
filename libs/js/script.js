@@ -30,12 +30,14 @@ function handler() {
   if (date === data[0].data.date) {
     rates = data;
     currencyRate();
+  } else {
+    localStorage.removeItem("data");
+    getRates();
   }
 }
 
 // GET RATES FOR EVERY POSSIBLE PAIR
 function getRates() {
-  localStorage.removeItem("data");
   currencies.forEach((c) => {
     for (let i = 0; i < currencies.length; i++) {
       if (c !== currencies[i]) {
