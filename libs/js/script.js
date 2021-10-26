@@ -30,8 +30,10 @@ function handler() {
   if (date === data[0].data.date) {
     rates = data;
     currencyRate();
+  } else {
+    localStorage.removeItem("data");
+    getRates();
   }
-  getRates();
 }
 
 // GET RATES FOR EVERY POSSIBLE PAIR
