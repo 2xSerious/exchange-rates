@@ -57,9 +57,9 @@ function getRates() {
   });
   $.when.apply(null, promises).done(function () {
     storageValidation = date;
-    currencyRate();
-    localStorage.setItem("data", JSON.stringify(rates));
     localStorage.setItem("date", storageValidation);
+    localStorage.setItem("data", JSON.stringify(rates));
+    currencyRate();
   });
 }
 
