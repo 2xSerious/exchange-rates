@@ -5,6 +5,7 @@ var promises = [];
 var lognestArray = [];
 var lognestlength = 0;
 var date = new Date().toISOString().split("T")[0];
+var storageValidation;
 $(function () {
   countryList();
   $("#currency-list").change(currencyRate);
@@ -22,16 +23,18 @@ function countryList() {
 
 function handler() {
   const cached = localStorage.getItem("data");
+  const cachedDate = localStorage.getItem("date");
   const data = JSON.parse(cached);
   if (!data) {
     getRates();
     return;
   }
-  if (date === data[0].data.date) {
+  if (date === cachedDate) {
     rates = data;
     currencyRate();
   } else {
     localStorage.removeItem("data");
+    localStorage.removeItem("date");
     getRates();
   }
 }
@@ -53,8 +56,10 @@ function getRates() {
     }
   });
   $.when.apply(null, promises).done(function () {
+    storageValidation = date;
     currencyRate();
     localStorage.setItem("data", JSON.stringify(rates));
+    localStorage.setItem("date", storageValidation);
   });
 }
 
