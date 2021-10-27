@@ -116,42 +116,34 @@ function currencyRate() {
     $("#g-3").append(`<td>Total Count: </td><td>${count3}</td>`);
 
     // GET LONGEST ARRAY
-    let min = Math.min.apply(
-      null,
-      lognestArray.map((e) => {
-        return e.rate;
-      })
-    );
-    let max = Math.max.apply(
-      null,
-      lognestArray.map((e) => {
-        return e.rate;
-      })
-    );
+    // let min = Math.min.apply(
+    //   null,
+    //   lognestArray.map((e) => {
+    //     return e.rate;
+    //   })
+    // );
+    // let max = Math.max.apply(
+    //   null,
+    //   lognestArray.map((e) => {
+    //     return e.rate;
+    //   })
+    // );
 
-    let arr1 = lognestArray.filter((el) => {
-      return el.rate >= max - 0.5;
-    });
-    let arr2 = lognestArray.filter((el) => {
-      return el.rate <= min + 0.5;
-    });
-
-    // let arr1 = [];
-    // let arr2 = [];
-    // lognestArray.forEach((el) => {
-    //   if (el.rate <= min + 0.5) {
-    //     arr1.push(el);
-    //   }
-    //   if (el.rate >= max - 0.5) {
-    //     arr2.push(el);
-    //   }
-    // });
-
-    if (arr1.length > arr2.length) {
-      lognestlength = arr1.length;
-    } else {
-      lognestlength = arr2.length;
+    let arr1 = [];
+    let index;
+    lognestArray.sort((a, b) => a.rate - b.rate);
+    for (let i = 0; i < lognestArray.length; i++) {
+      let current = lognestArray[i].rate;
+      let range = current + 0.5;
+      let arr = lognestArray.filter(
+        (el) => el.rate >= current && el.rate <= range
+      );
+      arr1.push(arr);
     }
+    index = arr1
+      .map((a) => a.length)
+      .indexOf(Math.max(...arr1.map((a) => a.length)));
+    lognestlength = arr1[index];
   }
-  $("#longest-arr").text(`Longest Array: ${lognestlength}`);
+  $("#longest-arr").text(`Longest Array: ${lognestlength.length}`);
 }
